@@ -1,0 +1,13 @@
+﻿<p style="margin-top: 50px">List of Files</p>
+<!-- Get all the files from the server -->
+<ul>
+    @foreach (var item in Model.Files)
+    {
+        <li>
+            <a asp-action="Download"
+               asp-route-filename="@item.Name">
+               @item.Name
+           </a>
+        </li>
+    }
+</ul>
