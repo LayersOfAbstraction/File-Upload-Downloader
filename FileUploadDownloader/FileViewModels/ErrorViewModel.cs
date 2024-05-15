@@ -1,4 +1,4 @@
-namespace ProCodeGuide.Samples.FileUpload.Models
+namespace FileUploadDownloader.FileViewModels
 {
     public class ErrorViewModel
     {

@@ -1,5 +1,5 @@
+using FileUploadDownloader.FileViewModels;
 using Microsoft.AspNetCore.Mvc;
-using ProCodeGuide.Samples.FileUpload.Models;
 using System.Diagnostics;
 
 namespace FileUploadDownloader

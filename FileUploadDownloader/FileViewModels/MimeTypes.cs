@@ -1,4 +1,4 @@
-﻿namespace FileUploadDownloader.Models
+﻿namespace FileUploadDownloader.FileViewModels
 {
     public static class MimeTypes
     {

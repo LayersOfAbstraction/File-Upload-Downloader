@@ -29,12 +29,12 @@ namespace FileUploadDownloader
             try
             {
 
-                var fileBytes = await _bufferedFileUploadService.DownloadFile(fileName);
-                if (fileBytes != null)
+                var fileDownloadModel = await _bufferedFileUploadService.DownloadFile(fileName);
+                if (fileDownloadModel != null)
                 {
                     //Chains the synchronous method of GetContentType to return the  
                     var contentType = _bufferedFileUploadService.GetContentType(fileName);
-                    return File(fileBytes, contentType, fileName);
+                    return File(fileDownloadModel.FileContent, fileDownloadModel.ContentType, fileDownloadModel.FileName);
                 }
                 else
                 {
