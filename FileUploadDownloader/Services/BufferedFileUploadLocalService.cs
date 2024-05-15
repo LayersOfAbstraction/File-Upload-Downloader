@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using FileUploadDownloader.Interfaces;
+using FileUploadDownloader.FileViewModels;
 
 namespace FileUploadDownloader.Services
 {
     public class BufferedFileUploadLocalService : IBufferedFileUploadService
-    {
+    {        
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<BufferedFileUploadLocalService> _logger;
 
@@ -25,24 +26,31 @@ namespace FileUploadDownloader.Services
         {
             try
             {
-                string fileExtension = Path.GetExtension(file.FileName);
+                //Bind service to FileUploadModel.
+                FileUploadModel fileUploadModel = new FileUploadModel
+                {
+                    File = file,
+                    FileName = file.FileName,
+                    FileExtension = Path.GetExtension(file.FileName),
+                    FileSize = file.Length
+                };
                 //Validate current file extension against dictionary.
-                var allowedExtensions = Models.MimeTypes.GetMimeTypes();
-                if (allowedExtensions.ContainsKey(fileExtension))
+                var allowedExtensions = MimeTypes.GetMimeTypes();
+                if (allowedExtensions.ContainsKey(fileUploadModel.FileExtension))
                 {
                     var maxFileSize = 5 * 1024 * 1024; // 5MB
-                    if (file.Length > maxFileSize)
+                    if (fileUploadModel.FileSize > maxFileSize)
                     {
                         return false;
                     }
 
                     // Save the file to the server.
-                    var fileName = Path.GetFileName(file.FileName);
+                    var fileName = Path.GetFileName(fileUploadModel.File.FileName);
                     //Get the root path of your application via IWebHostEnvironment.
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
-                        await file.CopyToAsync(stream);
+                        await fileUploadModel.File.CopyToAsync(stream);
                     }
                     return true;
                 }
@@ -56,7 +64,7 @@ namespace FileUploadDownloader.Services
         }
 
 
-        public async Task<byte[]?> DownloadFile(string fileName)
+        public async Task<FileDownloadModel?> DownloadFile(string fileName)
         {
             try
             {
@@ -70,8 +78,14 @@ namespace FileUploadDownloader.Services
                 using var memoryStream = new MemoryStream();
                 {
                     await stream.CopyToAsync(memoryStream);
-                }                
-                return memoryStream.ToArray();
+                }
+                return new FileDownloadModel
+                {
+                    FileName = fileName,
+                    FileContent = memoryStream.ToArray(),
+                    ContentType = GetContentType(fileName),
+                    DownloadResult = true
+                };
             }
 
             catch (Exception ex)
@@ -83,7 +97,7 @@ namespace FileUploadDownloader.Services
         // Get content type
         public string GetContentType(string path)
         {
-            var allowedExtensions = Models.MimeTypes.GetMimeTypes();
+            var allowedExtensions = MimeTypes.GetMimeTypes();
             var ext = Path.GetExtension(path).ToLowerInvariant();
             return allowedExtensions[ext];
         }
