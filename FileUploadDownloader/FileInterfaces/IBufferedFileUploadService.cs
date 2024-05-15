@@ -1,6 +1,6 @@
 ﻿using FileUploadDownloader.FileViewModels;
 
-namespace FileUploadDownloader.Interfaces
+namespace FileUploadDownloader.FileInterfaces
 {
     public interface IBufferedFileUploadService
     {

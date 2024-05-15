@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
-using FileUploadDownloader.Interfaces;
+using FileUploadDownloader.FileInterfaces;
 using FileUploadDownloader.FileViewModels;
 
 namespace FileUploadDownloader.Services

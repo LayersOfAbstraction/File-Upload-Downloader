@@ -1,4 +1,4 @@
-using FileUploadDownloader.Interfaces;
+using FileUploadDownloader.FileInterfaces;
 using FileUploadDownloader.Services;
 
 var builder = WebApplication.CreateBuilder(args);

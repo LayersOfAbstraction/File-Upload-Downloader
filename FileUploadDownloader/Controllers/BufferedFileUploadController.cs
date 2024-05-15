@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FileUploadDownloader.Interfaces;
+using FileUploadDownloader.FileInterfaces;
 using System.Diagnostics;
 using System.Net.Mime;
 
