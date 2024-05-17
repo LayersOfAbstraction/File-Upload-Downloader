@@ -9,12 +9,10 @@ namespace FileUploadDownloader.Services
     public class BufferedFileUploadLocalService : IBufferedFileUploadService
     {        
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ILogger<BufferedFileUploadLocalService> _logger;
 
         public BufferedFileUploadLocalService(IWebHostEnvironment webHostEnvironment, ILogger<BufferedFileUploadLocalService> logger)
         {
             _webHostEnvironment = webHostEnvironment;
-            _logger = logger;
         }
         /// <summary>
         /// Method uploads file to the wwwroot/Uploads subfolder.
@@ -27,7 +25,7 @@ namespace FileUploadDownloader.Services
             try
             {
                 //Bind service to FileUploadModel.
-                FileUploadModel fileUploadModel = new FileUploadModel
+                FileModel fileUploadModel = new FileModel
                 {
                     File = file,
                     FileName = file.FileName,
@@ -36,8 +34,7 @@ namespace FileUploadDownloader.Services
                 };
                 //Validate current file extension against dictionary.
                 var allowedExtensions = MimeTypes.GetMimeTypes();
-                if (allowedExtensions.ContainsKey(fileUploadModel.FileExtension))
-                {
+                
                     var maxFileSize = 5 * 1024 * 1024; // 5MB
                     if (fileUploadModel.FileSize > maxFileSize)
                     {
@@ -52,45 +49,12 @@ namespace FileUploadDownloader.Services
                     {
                         await fileUploadModel.File.CopyToAsync(stream);
                     }
+
                     return true;
-                }
-                else
-                    return false;
             }
             catch (Exception ex) 
             {
                 throw new Exception("File Copy Failed", ex);
-            }
-        }
-
-
-        public async Task<FileDownloadModel?> DownloadFile(string fileName)
-        {
-            try
-            {
-                var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
-                if (fileName.Length < 0)
-                {
-                    return null;
-                }
-
-                await using var stream = new FileStream(path,FileMode.Open);
-                using var memoryStream = new MemoryStream();
-                {
-                    await stream.CopyToAsync(memoryStream);
-                }
-                return new FileDownloadModel
-                {
-                    FileName = fileName,
-                    FileContent = memoryStream.ToArray(),
-                    ContentType = GetContentType(fileName),
-                    DownloadResult = true
-                };
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("File Download Failed", ex);
             }
         }
 
@@ -99,7 +63,15 @@ namespace FileUploadDownloader.Services
         {
             var allowedExtensions = MimeTypes.GetMimeTypes();
             var ext = Path.GetExtension(path).ToLowerInvariant();
-            return allowedExtensions[ext];
+            if (allowedExtensions.ContainsKey(path))
+            {
+                return allowedExtensions[ext];
+            }            
+            
+            else
+            {
+                throw new Exception("Extension invalid");
+            }            
         }
     }
 }
