@@ -3,17 +3,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using FileUploadDownloader.FileInterfaces;
 using FileUploadDownloader.FileViewModels;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace FileUploadDownloader.Services
 {
     public class BufferedFileUploadLocalService : IBufferedFileUploadService
     {        
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IFileProvider _fileProvider;
 
-        public BufferedFileUploadLocalService(IWebHostEnvironment webHostEnvironment, ILogger<BufferedFileUploadLocalService> logger)
+        public BufferedFileUploadLocalService(IWebHostEnvironment webHostEnvironment, IFileProvider provider)
         {
             _webHostEnvironment = webHostEnvironment;
+            _fileProvider = provider;
         }
+
+        public List<FileModel> GetFileModels()
+        {
+            var fileModels = new List<FileModel>();
+            foreach (var item in _fileProvider.GetDirectoryContents(""))
+            {
+                fileModels.Add(new FileModel()
+                {
+                    FileName = item.Name,
+                    FileExtension = item.PhysicalPath
+                });
+            }
+            return fileModels;
+        }
+
         /// <summary>
         /// Method uploads file to the wwwroot/Uploads subfolder.
         /// </summary>
@@ -56,6 +74,20 @@ namespace FileUploadDownloader.Services
             {
                 throw new Exception("File Copy Failed", ex);
             }
+        }
+
+        public async Task<byte[]> DownloadFile(string fileName)
+        {
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
+            byte[] fileBytes;
+
+            using (var sourceStream = new FileStream(path, FileMode.Open))
+            {
+                fileBytes = new byte[sourceStream.Length];
+                await sourceStream.ReadAsync(fileBytes, 0, fileBytes.Length);
+            }
+
+            return fileBytes;
         }
 
         // Get content type
