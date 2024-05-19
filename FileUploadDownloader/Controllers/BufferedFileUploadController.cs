@@ -12,12 +12,12 @@ namespace FileUploadDownloader
     /// </summary>
     public class BufferedFileUploadController : Controller
     {
-        readonly IBufferedFileUploadService _bufferedFileUploadService;
+        readonly IBufferedFileUploadService _bufferedFileUploadInterface;
         private readonly IFileProvider _fileProvider;
 
-        public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService, IFileProvider provider)
+        public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadInterface, IFileProvider provider)
         {
-            _bufferedFileUploadService = bufferedFileUploadService;
+            _bufferedFileUploadInterface = bufferedFileUploadInterface;
             _fileProvider = provider;
         }
 
@@ -29,13 +29,13 @@ namespace FileUploadDownloader
         /// <returns>Returns view.</returns>
         public ActionResult Index()
         {
-            var fileModels = _bufferedFileUploadService.GetFileModels();
+            var fileModels = _bufferedFileUploadInterface.GetFileModels();
             return View(fileModels);
         }
 
         public async Task<IActionResult> Download(string filename)
         {
-            byte[] fileBytes = await _bufferedFileUploadService.DownloadFile(filename);
+            byte[] fileBytes = await _bufferedFileUploadInterface.DownloadFile(filename);
 
             return File(fileBytes, "application/octet-stream", filename);
         }
@@ -59,7 +59,7 @@ namespace FileUploadDownloader
         {
             try
             {
-                if (await _bufferedFileUploadService.UploadFile(file))
+                if (await _bufferedFileUploadInterface.UploadFile(file))
                 {
                     ViewBag.Message = "File Upload Successful";
                 }
