@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using FileUploadDownloader.FileInterfaces;
 using System.Diagnostics;
 using System.Net.Mime;
+using Microsoft.Extensions.FileProviders;
 
 namespace FileUploadDownloader
 {
@@ -12,10 +13,12 @@ namespace FileUploadDownloader
     public class BufferedFileUploadController : Controller
     {
         readonly IBufferedFileUploadService _bufferedFileUploadService;
+        private readonly IFileProvider _fileProvider;
 
-        public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService)
+        public BufferedFileUploadController(IBufferedFileUploadService bufferedFileUploadService, IFileProvider provider)
         {
             _bufferedFileUploadService = bufferedFileUploadService;
+            _fileProvider = provider;
         }
 
         // GET: StreamFileUploadController
@@ -24,29 +27,17 @@ namespace FileUploadDownloader
         /// </summary>
         /// <param name="fileName">Gets the file name from whatever path the DownloadFile extension method has</param>
         /// <returns>Returns view.</returns>
-        public async Task<ActionResult> Index(string fileName)
+        public ActionResult Index()
         {
-            try
-            {
+            var fileModels = _bufferedFileUploadService.GetFileModels();
+            return View(fileModels);
+        }
 
-                var fileDownloadModel = await _bufferedFileUploadService.DownloadFile(fileName);
-                if (fileDownloadModel != null)
-                {
-                    //Chains the synchronous method of GetContentType to return the  
-                    var contentType = _bufferedFileUploadService.GetContentType(fileName);
-                    return File(fileDownloadModel.FileContent, fileDownloadModel.ContentType, fileDownloadModel.FileName);
-                }
-                else
-                {
-                    ViewBag.Message = "File Download Failed";
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = "File Download Failed";
-                Debug.WriteLine("File Download Failed" + ex);
-            }
-            return View();
+        public async Task<IActionResult> Download(string filename)
+        {
+            byte[] fileBytes = await _bufferedFileUploadService.DownloadFile(filename);
+
+            return File(fileBytes, "application/octet-stream", filename);
         }
 
         // GET: StreamFileUploadController/Details/5
