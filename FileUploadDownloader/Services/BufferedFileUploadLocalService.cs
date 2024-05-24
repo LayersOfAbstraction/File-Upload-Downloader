@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace FileUploadDownloader.Services
 {
-    public class BufferedFileUploadLocalService : IBufferedFileUploadService
+    public class BufferedFileService : IBufferedFileService
     {        
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IFileProvider _fileProvider;
 
-        public BufferedFileUploadLocalService(IWebHostEnvironment webHostEnvironment, IFileProvider provider)
+        public BufferedFileService(IWebHostEnvironment webHostEnvironment, IFileProvider provider)
         {
             _webHostEnvironment = webHostEnvironment;
             _fileProvider = provider;

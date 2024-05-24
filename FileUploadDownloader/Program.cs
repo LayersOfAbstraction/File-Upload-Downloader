@@ -16,7 +16,7 @@ builder.Services.AddSingleton<IFileProvider>(services =>
 });
 
 //Register this service in the dependency container so that it can be injected into a controller
-builder.Services.AddTransient<IBufferedFileUploadService, BufferedFileUploadLocalService>();
+builder.Services.AddTransient<IBufferedFileService, BufferedFileService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

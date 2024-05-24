@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FileUploadDownloader.FileViewModels.FileListModel">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>FileViewModels\FileListModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileUploadDownloader.FileViewModels.FileModel">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAEAAAAAAEAAABAgAA=</HashCode>
+      <FileName>FileViewModels\FileModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileUploadDownloader.FileViewModels.MimeTypes">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileViewModels\MimeTypes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileUploadDownloader.BufferedFileUploadController">
+    <Position X="7.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAABEAAAAAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\BufferedFileUploadController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileUploadDownloader.Services.BufferedFileService" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACEAAAEAAAAAAAAJACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\BufferedFileUploadLocalService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="FileUploadDownloader.FileInterfaces.IBufferedFileService">
+    <Position X="5.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileInterfaces\IBufferedFileUploadService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

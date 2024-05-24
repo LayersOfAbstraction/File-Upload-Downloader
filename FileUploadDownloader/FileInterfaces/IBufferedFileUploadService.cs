@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FileUploadDownloader.FileInterfaces
 {
-    public interface IBufferedFileUploadService
+    public interface IBufferedFileService
     {
         Task<bool> UploadFile(IFormFile file);
         Task<byte[]> DownloadFile(string filename);
