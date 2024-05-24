@@ -10,12 +10,12 @@ namespace FileUploadDownloader
     /// <summary>
     /// Class designed for small file uploads and downloads
     /// </summary>
-    public class BufferedFileUploadController : Controller
+    public class BufferedFileController : Controller
     {
         readonly IBufferedFileService _bufferedFileUploadInterface;
         private readonly IFileProvider _fileProvider;
 
-        public BufferedFileUploadController(IBufferedFileService bufferedFileUploadInterface, IFileProvider provider)
+        public BufferedFileController(IBufferedFileService bufferedFileUploadInterface, IFileProvider provider)
         {
             _bufferedFileUploadInterface = bufferedFileUploadInterface;
             _fileProvider = provider;
