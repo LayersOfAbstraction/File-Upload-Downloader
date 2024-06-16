@@ -86,11 +86,15 @@ namespace FileUploadDownloader.Services
                 fileBytes = new byte[sourceStream.Length];
                 await sourceStream.ReadAsync(fileBytes, 0, fileBytes.Length);
             }
-
             return fileBytes;
         }
 
-        // Get content type
+        /// <summary>
+        /// Checks if extension is in our MimeTypes dictionary and if not throws an error.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public string GetContentType(string path)
         {
             var allowedExtensions = MimeTypes.GetMimeTypes();
