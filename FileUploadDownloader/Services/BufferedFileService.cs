@@ -105,5 +105,26 @@ namespace FileUploadDownloader.Services
                 throw new Exception("Extension invalid");
             }            
         }
+
+        /* PROBLEM: To display the details of a photo
+         * GET file view model where file view photo is equal to ID.
+         * Get extension.
+         * SET PixelCount = 0
+         * Create Canvas 1024 * 1024px.          
+         * IF Extension authorised               
+         *      Foreach pixel in PixelArray
+         *          PixelCount = pixel
+         *          
+         *          IF pixelCount > Canvas
+         *              Resize pixels.
+        */
+
+        // PROBLEM: To delete a photo from view
+        //
+        //
+
+        // Problem: To Update a photo 
+        //
+        //
     }
 }
