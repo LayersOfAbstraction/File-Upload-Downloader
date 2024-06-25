@@ -107,21 +107,29 @@ namespace FileUploadDownloader.Services
         }
 
         /* PROBLEM: To display the details of a photo
+         * GET Upload folder
          * GET file view model where file view photo is equal to ID.
          * Get extension.
-         * SET PixelCount = 0
+         * SET PixelByteCount = 0
          * Create Canvas 1024 * 1024px.          
          * IF Extension authorised               
-         *      Foreach pixel in PixelArray
+         *      FOREACH pixel in PixelByteArray
          *          PixelCount = pixel
          *          
-         *          IF pixelCount > Canvas
+         *          IF PixelByteCount > Canvas
          *              Resize pixels.
+         *              PRINT PixelByteArray[PixelByteCount]
+         *          END IF
+         *      END FOREACH
+         *      END
         */
 
-        // PROBLEM: To delete a photo from view
-        //
-        //
+        /*PROBLEM: To delete a photo from view
+         * GET Upload folder
+         * GET file view model where file view photo is equal to ID.
+         * GET extension.
+         */
+
 
         // Problem: To Update a photo 
         //
