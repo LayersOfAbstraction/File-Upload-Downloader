@@ -124,6 +124,22 @@ namespace FileUploadDownloader.Services
          *      END
         */
 
+
+        public FileModel GetPiture(String fileName)
+        {
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
+            byte[] fileBytes;
+            FileModel fm = new FileModel();
+            byte PixelByteCount = 0;
+            var canvas = 1920 * 1080; //Pixels shown on screen
+            if (fileName == fm.FileName)
+            {
+                foreach (byte pixel in fileBytes.Length[PixelByteCount])
+                {
+
+                }
+            }
+        }
         /*PROBLEM: To delete a photo from view
          * GET Upload folder
          * GET file view model where file view photo is equal to ID.
