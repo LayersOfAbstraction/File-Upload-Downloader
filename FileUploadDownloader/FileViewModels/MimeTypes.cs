@@ -1,5 +1,9 @@
 ﻿namespace FileUploadDownloader.FileViewModels
 {
+    /// <summary>
+    /// Reusable class for mapping a list of types back to the caller.
+    /// Delete whatever types are not required where appropriate.
+    /// </summary>
     public static class MimeTypes
     {
         public static Dictionary<string, string> GetMimeTypes()
