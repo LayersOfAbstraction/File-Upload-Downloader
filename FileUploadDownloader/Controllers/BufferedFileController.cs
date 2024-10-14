@@ -41,7 +41,18 @@ namespace FileUploadDownloader
         }
 
         // GET: StreamFileUploadController/Details/5
-        public ActionResult Details(int id)
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
+
+        // GET: StreamFileUploadController/Details/5
+        /// <summary>
+        /// Display the photo.
+        /// </summary>
+        /// <param name="fileName">path</param>
+        /// <returns></returns>
+        public ActionResult Details(string fileName)
         {
             return View();
         }

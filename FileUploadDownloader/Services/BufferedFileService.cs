@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing.Constraints;
 namespace FileUploadDownloader.Services
 {
     public class BufferedFileService : IBufferedFileService
-    {        
+    {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IFileProvider _fileProvider;
 
@@ -52,25 +52,25 @@ namespace FileUploadDownloader.Services
                 };
                 //Validate current file extension against dictionary.
                 var allowedExtensions = MimeTypes.GetMimeTypes();
-                
-                    var maxFileSize = 5 * 1024 * 1024; // 5MB
-                    if (fileUploadModel.FileSize > maxFileSize)
-                    {
-                        return false;
-                    }
 
-                    // Save the file to the server.
-                    var fileName = Path.GetFileName(fileUploadModel.File.FileName);
-                    //Get the root path of your application via IWebHostEnvironment.
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await fileUploadModel.File.CopyToAsync(stream);
-                    }
+                var maxFileSize = 5 * 1024 * 1024; // 5MB
+                if (fileUploadModel.FileSize > maxFileSize)
+                {
+                    return false;
+                }
 
-                    return true;
+                // Save the file to the server.
+                var fileName = Path.GetFileName(fileUploadModel.File.FileName);
+                //Get the root path of your application via IWebHostEnvironment.
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await fileUploadModel.File.CopyToAsync(stream);
+                }
+
+                return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception("File Copy Failed", ex);
             }
@@ -102,12 +102,20 @@ namespace FileUploadDownloader.Services
             if (allowedExtensions.ContainsKey(path))
             {
                 return allowedExtensions[ext];
-            }            
-            
+            }
+
             else
             {
                 throw new Exception("Extension invalid");
-            }            
+            }
+        }
+
+        public async Task<(int width, int height)> GetImageDimensions(string path)
+        {
+            using (var image = System.Drawing.Image.FromFile(path))
+            {
+                return (image.Width, image.Height);
+            }
         }
     }
 }

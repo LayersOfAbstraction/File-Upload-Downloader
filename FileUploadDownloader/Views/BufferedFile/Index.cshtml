@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FileUploadDownloader.FileViewModels.FileModel>
+﻿@model IEnumerable<FileModel>
 <!-- Get all the files from the server -->
 @{
     ViewData["Title"] = "Index";
@@ -18,6 +18,9 @@
             <th>
                 Download links
             </th>
+            <th>
+                View Image
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -34,8 +37,11 @@
                         Download File
                     </a>
                 </td>
+                <td>
+                    <a href="@Url.Action("Details", new { filePath = item.FileExtension })">@item.FileName</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-<img src="~/Uploads/i1 (2).png" class="img" asp-append-version="true" alt="Test">
+<img src="~/Uploads/MyImage.png" class="img" alt="Test">
