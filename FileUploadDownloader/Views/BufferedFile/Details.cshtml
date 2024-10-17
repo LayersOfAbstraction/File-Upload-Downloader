@@ -1,8 +1,8 @@
-﻿
-@{
-    ViewData["Title"] = "Details";
+﻿@{
+    ViewBag.Title = "Details";
 }
 
+<h2>Image Details</h2>
 <p>Width: @ViewBag.Width px</p>
 <p>Height: @ViewBag.Height px</p>
-
+<img src="@ViewBag.ImagePath" alt="Image" />

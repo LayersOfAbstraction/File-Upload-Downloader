@@ -8,5 +8,7 @@ namespace FileUploadDownloader.FileInterfaces
         Task<bool> UploadFile(IFormFile file);
         Task<byte[]> DownloadFile(string filename);
         List<FileModel> GetFileModels();
+
+        Task<(int width, int height)> GetImageDimensions(string path);
     }
 }

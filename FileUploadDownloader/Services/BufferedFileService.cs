@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.Extensions.FileProviders;
 using FileUploadDownloader.FileInterfaces;
 using FileUploadDownloader.FileViewModels;
-using Microsoft.AspNetCore.Routing.Constraints;
+using System.Diagnostics;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+
 
 namespace FileUploadDownloader.Services
 {
@@ -110,11 +112,21 @@ namespace FileUploadDownloader.Services
             }
         }
 
+
         public async Task<(int width, int height)> GetImageDimensions(string path)
         {
-            using (var image = System.Drawing.Image.FromFile(path))
+            try
             {
-                return (image.Width, image.Height);
+                using (var image = await Image.LoadAsync<Rgba32>(path))
+                {
+                    return (image.Width, image.Height);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the error
+                Console.WriteLine($"Error loading image: {ex.Message}");
+                return (0, 0); // or throw
             }
         }
     }

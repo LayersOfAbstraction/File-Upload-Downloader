@@ -52,9 +52,21 @@ namespace FileUploadDownloader
         /// </summary>
         /// <param name="fileName">path</param>
         /// <returns></returns>
-        public ActionResult Details(string fileName)
+        public async Task<ActionResult> Details(string filePath)
         {
-            return View();
+            if (System.IO.File.Exists(filePath))
+            {
+                var dimensions = await _bufferedFileUploadInterface.GetImageDimensions(filePath);
+                ViewBag.Width = dimensions.width;
+                ViewBag.Height = dimensions.height;
+                ViewBag.ImagePath = Url.Content($"~/Uploads/{Path.GetFileName(filePath)}");
+                return View();
+            }
+            else
+            {
+                // Handle the case when file does not exist
+                return NotFound(); // or similar
+            }
         }
 
         // GET: StreamFileUploadController/Create
